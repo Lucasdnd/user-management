@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +18,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+Route::get('/edit',[UsersController::class, 'edit'], function () {
+    return view('edit');
+})->name('edit');
+
+Route::post('/destroy/{id}', [UsersController::class,'destroy'])->name('destroy');
+
+
+
+Route::get('/dashboard',[UsersController::class, 'index'], function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+})->name('dashboard');
+
+
+Route::get('/profile', function () {
+    return view('profile');
+})->middleware(['auth'])->name('profile');
 
 require __DIR__.'/auth.php';
